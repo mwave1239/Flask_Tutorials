@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Ninja Gold Game</title>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class='container'>
+		<div class='row'>
+			<h4>Your Gold: {{ session['gold'] }} </h4>
+		</div>
+		<div class='row'>
+			<div class='col-md-3 text-center'>
+				<h4>Farm</h4>
+				<p>(earns 10-20 golds)</p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='farm'>
+					<button type="submit" class="btn btn-success">Find Gold!</button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4>Cave</h4>
+				<p>(earns 5-10 golds)</p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='cave'>
+					<button type="submit" class="btn btn-success">Find Gold!</button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4>House</h4>
+				<p>(earns 2-5 golds)</p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='house'>
+					<button type="submit" class="btn btn-success">Find Gold!</button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4>Casino</h4>
+				<p>(earns/loses 0-50 golds)</p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='casino'>
+					<button type="submit" class="btn btn-success">Find Gold!</button>
+				</form>
+			</div>
+		</div>
+		<div class='row'>
+			<h4>Activities:</h4>
+			<div id='activities'>
+				{% if session['activities'] %}
+					{% for activity in session['activities'] %}
+						{% if 'Earned' not in activity %}
+							<p class='lose'>{{ activity }}</p>
+						{% else %}
+							<p class='win'>{{ activity }}</p>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+    <div class="row text-left">
+      <a href="/reset" class="btn btn-success">Restart</a>
+    </div>
+	</div>
+</body>
+</html>
